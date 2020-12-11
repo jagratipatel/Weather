@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {
+      response:[]
+    };
+  }
+
+  componentDidMount() {
+    const q = 'Bangalore';
+    fetch(`http://api.weatherapi.com/v1/current.json?key=35bc0c3bf2ec4e4f905135251201012&q=${q}`)
+    .then(response => {
+      response.json();
+    })    
+.then(response => {
+	this.setState({
+          response : response
+  })
+})
+.catch(err => {
+	console.error(err);
+});
 }
 
-export default App;
+  render (){
+    console.log(this.state.response)
+    return(
+      <div className="App">
+        <span>City</span> 
+        <input type="text"/>
+      </div>)
+}
+}
+
+export default App; 
